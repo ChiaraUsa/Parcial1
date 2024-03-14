@@ -1,0 +1,43 @@
+{
+    "dev": {
+        "app_function": "lambda.f",
+        "aws_region": "us-east-1",
+        "project_name": "parcial1",
+        "runtime": "python3.10",
+        "s3_bucket": "bucket-raw-cv",
+        "keep_warm": false,
+        "apigateway_enabled": false,
+        "manage_roles": false,
+        "role_name": "LabRole",
+        "events": [
+            {
+                "function": "lambda.f",
+                "expression": "cron(25 20 ? * THU *)"  
+            }
+        ]
+    },
+
+    "dev2": {
+        "app_function": "extract_data.handler",
+        "aws_region": "us-east-1",
+        "project_name": "parcial1",
+        "runtime": "python3.10",
+        "s3_bucket": "bucket-final-cv",
+        "keep_warm": false,
+        "manage_roles": false,
+        "apigateway_enabled": false,
+        "role_name": "LabRole",
+        "events": [
+            {
+                "function": "extract_data.handler",
+                "event_source": {
+                    "arn":  "arn:aws:s3:::bucket-raw-cv"
+                    "events": [
+                        "s3:ObjectCreated:*"
+                    ]
+                }
+            }
+        ]
+    }
+
+}
