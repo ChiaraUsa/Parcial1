@@ -52,7 +52,9 @@ jobs:
           aws-region: us-east-1
 
       - name: Flake8
-        run: flake8 --exclude env
+        run: |
+          pip install flake8
+          flake8 --exclude env
 
       - name: Pruebas Unitarias Pytest
         run: pytest test_extract_data.py
