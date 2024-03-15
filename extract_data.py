@@ -3,6 +3,43 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 import pandas as pd
 
+html_content = """
+        <!DOCTYPE html>
+        <html xmlns="https://www.w3.org/1999/xhtml" lang="es">
+        <head>
+            
+            <link rel="preload" as="image" type="image/jpeg" href="https://img.mitula.com/eyJidWNrZXQiOiJwcmQtbGlmdWxsY29ubmVjdC1iYWNrZW5kLWIyYi1pbWFnZXMiLCJrZXkiOiJwcm9wZXJ0aWVzLzJiY2Q0ZDk0LWFmOWQtNDY1MC05MjRjLTQwMzg0YmQxYzcwYS8wYWVmYmYxMC00YzFmLTQ2ZGUtOTUyNy1mMGFjZDhkMWY3ODAucG5nIiwiYnJhbmQiOiJNSVRVTEEiLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM4MCwiaGVpZ2h0IjoyMzAsImZpdCI6ImNvdmVyIn19fQ==">
+        
+            <script type="application/ld+json">
+            <div class="info-wrapper">
+                <div class="listing-card__information-main">
+                    <div class="listing-card__title-wrapper">
+                        <div class="listing-card__title" content="¡tu Espacio Perfecto En Venta!  Apartamento En Venta En La Florida, Engativa. Bogotá.">
+                            ¡tu Espacio Perfecto En Venta!  Apartamento En Venta En La Florida, Engativa. Bogotá.
+                        </div>
+                    </div>
+                    <div class="listing-card__price-wrapper">
+                        <div class="price">$ 158.000.000</div>
+                    </div>
+                    <div class="listing-card__location">Bogotá, D.C., Bogotá, D.C.</div>
+                    <div class="listing-card__properties">
+                        <div class="listing-card__property">
+                            <div class="card-icon card-icon__bedrooms"></div>
+                            <span content="3" data-test="bedrooms">3 habitaciones</span>
+                        </div>
+                    </div>
+                    <div class="listing-card__facilities listing-card__facilities--separated">
+                        <div class="facility-item">
+                            <span class="facility-item__text">Gas natural</span>
+                        </div>
+                        <div class="facility-item">
+                            <span class="facility-item__text">Agua</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        """
+
 
 def extract_data(html_content):
     """
@@ -13,7 +50,7 @@ def extract_data(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
     # print("HTML:     ",soup)
     properties = soup.find_all('div', class_='listing-card__information')
-    # print("PROPERTIES: ",properties)
+    print(properties[0])
     data = []
 
     for prop in properties:
@@ -38,7 +75,7 @@ def extract_data(html_content):
             adicional_text = 'No disponible'
 
         data.append([price, area, bedrooms, adicional_text])
-        # print(data)
+        print(data)
 
     return data
 
@@ -108,4 +145,7 @@ def handler(event, context):
     }
 
 
-handler(None, None)
+#andler(None, None)
+extract_data(html_content)
+
+
